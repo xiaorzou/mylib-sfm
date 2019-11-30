@@ -41,39 +41,7 @@ import unittest
 
 class MyTestCase(unittest.TestCase):
     def test1(self):
-        signature = 'N50_m2_s23222.xlsx'
-        inputfile       = 'model_' + signature
-        initdatafile = 'init_' + signature
-        outputfile = 'calibration_' + signature
-        outputfile_PCA = 'target_PCA_' + signature
-
-        num_factor_region = 2
-        boundary =  [0, 10, 20, 30,40,50]
-        num_factor_sectors = [2,3, 2, 2, 2]
-        upperbound_constrain = 0.95**2
-
-        xls = pd.ExcelFile(inputfile)
-        all_beta = np.matrix(xls.parse('beta_full'))
-        corrMatrix = all_beta.dot(all_beta.T)
-        corrMatrix = corrMatrix - np.diag(np.diag(corrMatrix)) + np.identity(boundary[-1])
-        sfm_obj = sfm(num_factor_region, num_factor_sectors, boundary, corrMatrix, upperbound_constrain, initdatafile)
-
-        #to use a randomly generated initial data for calibration, one should call the following.
-        # Once a init file is generated, comment the line out and rerun the program.
-        sfm_obj.generateInitData(initdatafile)
-
-        sfm_obj.loadInitData()
-        initdata = sfm_obj.getInitData()
-        sfm_obj.calibration()
-        data = {}
-        data[sfm_obj.getRegionName()] = xls.parse(sfm_obj.getRegionName())
-        for SID in np.arange(len(sfm_obj.getNumFactorSectors())):
-            data[sfm_obj.getSectorNames(SID)] = xls.parse(sfm_obj.getSectorNames(SID))
-
-        data_PCA = normalizedInputData(data, sfm_obj)
-        saveData(outputfile_PCA, data_PCA, sfm_obj)
-        sfm_obj.saveCalibrationOutput(outputfile)
-
+        #to be updated
 
 if __name__ == '__main__':
     unittest.main()
